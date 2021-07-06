@@ -5,10 +5,10 @@ ID="A01" # Sensor ID
 mqtt_broker = "ia.ic.polyu.edu.hk" # Broker
 mqtt_port = 1883 # Default
 mqtt_qos = 1 # Quality of Service = 1
-mqtt_topic = "iot/20099033D"
+mqtt_topic = "iot/sensor"
 
 def mqtt_on_message(client, userdata, msg):
-    print(123)
+    #print(123)
     d_msg = str(msg.payload.decode("utf-8"))
     iotData = json.loads(d_msg)
     if iotData["node_id"] == ID:
