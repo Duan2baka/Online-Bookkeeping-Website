@@ -16,6 +16,7 @@
         <script>
             function processData(dataset) {
                 var result = []
+                
                 dataset = JSON.parse(dataset);
                 dataset.forEach(item => result.push(item.fields));
                 return result;
