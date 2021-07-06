@@ -12,3 +12,13 @@ class Event(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return 'Event #{}'.format(self.id)
+
+class Venue_Event(models.Model):
+    Venue = models.CharField(max_length = 10)
+    Date = models.DateField()
+    Time_st = models.TimeField()
+    Time_ed = models.TimeField()
+    Event = models.CharField(max_length = 10)
+    Instructor = models.CharField(max_length = 20)
+    def __str__(self):
+        return 'Venue Event #{}'.format(self.id)
