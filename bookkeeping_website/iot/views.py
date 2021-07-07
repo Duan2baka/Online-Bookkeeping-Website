@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . import iot_mqtt
+#from . import iot_mqtt
 from .models import Event
 import xlrd
 # Create your views here.
@@ -8,7 +8,7 @@ def index(request):
     objects = Event.objects.all()
     dic = {'objects' : objects}
     return render(request, 'iot/index.html', dic)
-
+'''
 def import_excel(self, request):
     excel_file = request.FILES.get('excel_file', '')
     file_type = excel_file.name.split('.')[1]
@@ -33,3 +33,4 @@ def import_excel(self, request):
         return restful.success()
     else:
         return restful.error(message='上传文件类型错误！')
+'''

@@ -1,0 +1,19 @@
+<!doctype html>
+<HTML>
+    {% if value == 1 %}
+        <script>
+            alert('You should choose at least ONE venue!');
+            window.location.href = "../dashboard";
+        </script>
+    {% elif value == 2 %}
+        <script>
+            alert('You should choose at least ONE attribute!');
+            window.location.href = "../dashboard";
+        </script>
+    {% else %}
+        <script>
+            alert('How do you get here?');
+            window.location.href = "../dashboard";
+        </script>
+    {% endif %}
+</HTML>

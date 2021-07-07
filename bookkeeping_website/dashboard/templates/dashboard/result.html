@@ -3,233 +3,263 @@
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin=
         "anonymous">
-        <title>IC2140 IoT Dashboard</title>
+        <title>Result</title>
     </head>
     <body>
-        <h1 class="display-8 p-5 mb-7 bg-danger text-white">IC2140 IoT Dashboard</h1>
+        
+        <h1 class="display-9 p-5 mb-5 bg-danger text-white">
+            {% for obj in attribute_list %}
+                {{ obj }}&nbsp;
+            {% endfor %}
+            <br>
+            in
+            <br>
+            {% for obj in venue_list %}
+                &nbsp;{{ obj }}
+            {% endfor %}
+        </h1>
         <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.flexmonster.com/theme/old/flexmonster.min.css"/>
-        <div id="pivot-container1"></div>
-        <div id="pivot-container2"></div>
-        <div id="pivot-container3"></div>
-        <div id="pivot-container4"></div>
         <script>
             function processData(dataset) {
+                //console.log('123');
                 var result = []
+                var venue = {{ venue|safe }};
+                /*
+                for(var i in venue){
+                    console.log(typeof(venue[i]));
+                }
+                */
                 dataset = JSON.parse(dataset);
                 dataset.forEach(
                     function(item){
                         //if(item.fields.node_loc == 'W311-H1')
-                            result.push(item.fields);
+                        for(var i in venue){
+                            //console.log(item.fields['node_loc']);
+                            if(item.fields['node_loc'] == venue[i])
+                                result.push(item.fields);
+                        }
                     });
                 return result;
             }
         </script>
 
         <!--1-->
-        <script>
-            $.ajax({
-                url: '/dashboard/temp_data',
-                dataType: 'json',
-                success: function(data) {
-                    new Flexmonster({
-                        container: "#pivot-container1",
-                        componentFolder: "https://cdn.flexmonster.com/",
-                        // toolbar: true,
-                        height: 500,
-                        report: {
-                            dataSource: {
-                                type: "json",
-                                data: processData(data),
-                                    mapping: {
-                                    "node_id": { "caption": "ID" },
-                                    "node_loc": { "caption": "Location" },
-                                    "temp": { "caption": "Temperature", "type": "number" },
-                                    "date_created": { "caption": "Created Date", "type": "datetime" }
-                                    
+        {% if Temperature %}
+            <div id="pivot-container1"></div>
+            <script>
+                $.ajax({
+                    url: '/dashboard/temp_data',
+                    dataType: 'json',
+                    success: function(data) {
+                        new Flexmonster({
+                            container: "#pivot-container1",
+                            componentFolder: "https://cdn.flexmonster.com/",
+                            // toolbar: true,
+                            height: 500,
+                            report: {
+                                dataSource: {
+                                    type: "json",
+                                    data: processData(data),
+                                        mapping: {
+                                        "node_id": { "caption": "ID" },
+                                        "node_loc": { "caption": "Location" },
+                                        "temp": { "caption": "Temperature", "type": "number" },
+                                        "date_created": { "caption": "Created Date", "type": "datetime" }
+                                        
+                                    },
                                 },
-                            },
-                            slice: {
-                                rows: [
-                                    { uniqueName : "date_created"},
-                                ],
-                                columns: [
-                                    { uniqueName : "node_loc"},
-                                    { uniqueName : "[measures]", label : "Temperature" },
-                                ],
-                                measures: [
-                                    { uniqueName : "temp", format : "degree",},
-                                ]
-                            },
-                            formats: [
-                                {
-                                    name: "degree",
-                                    decimalPlaces: 1,
-                                }
-                            ],
-                            options: {
-                                viewType: "charts",
-                                chart: {
-                                    type: "line",
+                                slice: {
+                                    rows: [
+                                        { uniqueName : "date_created"},
+                                    ],
+                                    columns: [
+                                        { uniqueName : "node_loc"},
+                                        { uniqueName : "[measures]", label : "Temperature" },
+                                    ],
+                                    measures: [
+                                        { uniqueName : "temp", format : "degree",},
+                                    ]
                                 },
-                            },
-                        }
-                    });
-                }
-            });
-        </script>
+                                formats: [
+                                    {
+                                        name: "degree",
+                                        decimalPlaces: 1,
+                                    }
+                                ],
+                                options: {
+                                    viewType: "charts",
+                                    chart: {
+                                        type: "line",
+                                    },
+                                },
+                            }
+                        });
+                    }
+                });
+            </script>
+        {% endif %}
         <!--2-->
-        <script>
-            $.ajax({
-                url: '/dashboard/temp_data',
-                dataType: 'json',
-                success: function(data) {
-                    new Flexmonster({
-                        container: "#pivot-container2",
-                        componentFolder: "https://cdn.flexmonster.com/",
-                        height: 500,
-                        report: {
-                            dataSource: {
-                                type: "json",
-                                data: processData(data),
-                                    mapping: {
-                                    "node_id": { "caption": "ID" },
-                                    "node_loc": { "caption": "Location" },
-                                    "humid": { "caption": "Humidity", "type": "number" },
-                                    "date_created": { "caption": "Created Date", "type": "datetime" }
-                                    
+        {% if Humidity %}
+            <div id="pivot-container2"></div>
+            <script>
+                $.ajax({
+                    url: '/dashboard/temp_data',
+                    dataType: 'json',
+                    success: function(data) {
+                        new Flexmonster({
+                            container: "#pivot-container2",
+                            componentFolder: "https://cdn.flexmonster.com/",
+                            height: 500,
+                            report: {
+                                dataSource: {
+                                    type: "json",
+                                    data: processData(data),
+                                        mapping: {
+                                        "node_id": { "caption": "ID" },
+                                        "node_loc": { "caption": "Location" },
+                                        "humid": { "caption": "Humidity", "type": "number" },
+                                        "date_created": { "caption": "Created Date", "type": "datetime" }
+                                        
+                                    },
                                 },
-                            },
-                            slice: {
-                                rows: [
-                                    { uniqueName : "date_created"},
-                                ],
-                                columns: [
-                                    { uniqueName : "node_loc"},
-                                    { uniqueName : "[measures]", label : "Humidity" },
-                                ],
-                                measures: [
-                                    { uniqueName : "humid", format : "degree",},
-                                ]
-                            },
-                            formats: [
-                                {
-                                    name: "degree",
-                                    decimalPlaces: 1,
-                                }
-                            ],
-                            options: {
-                                viewType: "charts",
-                                chart: {
-                                    type: "line",
+                                slice: {
+                                    rows: [
+                                        { uniqueName : "date_created"},
+                                    ],
+                                    columns: [
+                                        { uniqueName : "node_loc"},
+                                        { uniqueName : "[measures]", label : "Humidity" },
+                                    ],
+                                    measures: [
+                                        { uniqueName : "humid", format : "degree",},
+                                    ]
                                 },
-                            },
-                        }
-                    });
-                }
-            });
-        </script>
+                                formats: [
+                                    {
+                                        name: "degree",
+                                        decimalPlaces: 1,
+                                    }
+                                ],
+                                options: {
+                                    viewType: "charts",
+                                    chart: {
+                                        type: "line",
+                                    },
+                                },
+                            }
+                        });
+                    }
+                });
+            </script>
+        {% endif %}
         <!--3-->
-        <script>
-            $.ajax({
-                url: '/dashboard/temp_data',
-                dataType: 'json',
-                success: function(data) {
-                    new Flexmonster({
-                        container: "#pivot-container3",
-                        componentFolder: "https://cdn.flexmonster.com/",
-                        // toolbar: true,
-                        height: 500,
-                        report: {
-                            dataSource: {
-                                type: "json",
-                                data: processData(data),
-                                    mapping: {
-                                    "node_id": { "caption": "ID" },
-                                    "node_loc": { "caption": "Location" },
-                                    "light": { "caption": "Light", "type": "number" },
-                                    "date_created": { "caption": "Created Date", "type": "datetime" }
+        {% if Light %}
+            <div id="pivot-container3"></div>
+            <script>
+                $.ajax({
+                    url: '/dashboard/temp_data',
+                    dataType: 'json',
+                    success: function(data) {
+                        new Flexmonster({
+                            container: "#pivot-container3",
+                            componentFolder: "https://cdn.flexmonster.com/",
+                            // toolbar: true,
+                            height: 500,
+                            report: {
+                                dataSource: {
+                                    type: "json",
+                                    data: processData(data),
+                                        mapping: {
+                                        "node_id": { "caption": "ID" },
+                                        "node_loc": { "caption": "Location" },
+                                        "light": { "caption": "Light", "type": "number" },
+                                        "date_created": { "caption": "Created Date", "type": "datetime" }
+                                    },
                                 },
-                            },
-                            slice: {
-                                rows: [
-                                    { uniqueName : "date_created"},
-                                ],
-                                columns: [
-                                    { uniqueName : "node_loc"},
-                                    { uniqueName : "[measures]", label : "Light" },
-                                ],
-                                measures: [
-                                    { uniqueName : "light", format : "degree",},
-                                ]
-                            },
-                            formats: [
-                                {
-                                    name: "degree",
-                                    decimalPlaces: 1,
-                                }
-                            ],
-                            options: {
-                                viewType: "charts",
-                                chart: {
-                                    type: "line",
+                                slice: {
+                                    rows: [
+                                        { uniqueName : "date_created"},
+                                    ],
+                                    columns: [
+                                        { uniqueName : "node_loc"},
+                                        { uniqueName : "[measures]", label : "Light" },
+                                    ],
+                                    measures: [
+                                        { uniqueName : "light", format : "degree",},
+                                    ]
                                 },
-                            },
-                        }
-                    });
-                }
-            });
-        </script>
+                                formats: [
+                                    {
+                                        name: "degree",
+                                        decimalPlaces: 1,
+                                    }
+                                ],
+                                options: {
+                                    viewType: "charts",
+                                    chart: {
+                                        type: "line",
+                                    },
+                                },
+                            }
+                        });
+                    }
+                });
+            </script>
+        {% endif %}
         <!--4-->
-        <script>
-            $.ajax({
-                url: '/dashboard/temp_data',
-                dataType: 'json',
-                success: function(data) {
-                    new Flexmonster({
-                        container: "#pivot-container4",
-                        componentFolder: "https://cdn.flexmonster.com/",
-                        height: 500,
-                        report: {
-                            dataSource: {
-                                type: "json",
-                                data: processData(data),
-                                    mapping: {
-                                    "node_id": { "caption": "ID" },
-                                    "node_loc": { "caption": "Location" },
-                                    "sound": { "caption": "Sound", "type": "number" },
-                                    "date_created": { "caption": "Created Date", "type": "datetime" }
+        {% if Sound %}
+            <div id="pivot-container4"></div>
+            <script>
+                $.ajax({
+                    url: '/dashboard/temp_data',
+                    dataType: 'json',
+                    success: function(data) {
+                        new Flexmonster({
+                            container: "#pivot-container4",
+                            componentFolder: "https://cdn.flexmonster.com/",
+                            height: 500,
+                            report: {
+                                dataSource: {
+                                    type: "json",
+                                    data: processData(data),
+                                        mapping: {
+                                        "node_id": { "caption": "ID" },
+                                        "node_loc": { "caption": "Location" },
+                                        "sound": { "caption": "Sound", "type": "number" },
+                                        "date_created": { "caption": "Created Date", "type": "datetime" }
+                                    },
                                 },
-                            },
-                            slice: {
-                                rows: [
-                                    { uniqueName : "date_created"},
-                                ],
-                                columns: [
-                                    { uniqueName : "node_loc"},
-                                    { uniqueName : "[measures]", label : "Sound" },
-                                ],
-                                measures: [
-                                    { uniqueName : "sound", format : "degree",},
-                                ]
-                            },
-                            formats: [
-                                {
-                                    name: "degree",
-                                    decimalPlaces: 1,
-                                }
-                            ],
-                            options: {
-                                viewType: "charts",
-                                chart: {
-                                    type: "line",
+                                slice: {
+                                    rows: [
+                                        { uniqueName : "date_created"},
+                                    ],
+                                    columns: [
+                                        { uniqueName : "node_loc"},
+                                        { uniqueName : "[measures]", label : "Sound" },
+                                    ],
+                                    measures: [
+                                        { uniqueName : "sound", format : "degree",},
+                                    ]
                                 },
-                            },
-                        }
-                    });
-                }
-            });
-        </script>
+                                formats: [
+                                    {
+                                        name: "degree",
+                                        decimalPlaces: 1,
+                                    }
+                                ],
+                                options: {
+                                    viewType: "charts",
+                                    chart: {
+                                        type: "line",
+                                    },
+                                },
+                            }
+                        });
+                    }
+                });
+            </script>
+        {% endif %}
     </body>
 </HTML>
