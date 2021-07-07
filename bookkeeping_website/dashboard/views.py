@@ -2,8 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.core import serializers
 from iot.models import Event as e1
-import tkinter.messagebox
-from tkinter import *
+#import tkinter.messagebox
+#from tkinter import *
 #from django.contrib import messages
 import json
 # Create your views here.
