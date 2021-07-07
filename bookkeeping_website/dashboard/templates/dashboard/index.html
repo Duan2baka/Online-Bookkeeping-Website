@@ -30,7 +30,7 @@
                     new Flexmonster({
                         container: "#pivot-container",
                         componentFolder: "https://cdn.flexmonster.com/",
-                        // toolbar: true,
+                        toolbar: true,
                         report: {
                             dataSource: {
                                 type: "json",
@@ -60,8 +60,7 @@
                                     { uniqueName : "temp", format : "degree",},
                                     { uniqueName : "humid", format : "degree",},
                                     { uniqueName : "light", format : "degree",},
-                                    { uniqueName : "sound", format : "degree",},
-                                    
+                                    { uniqueName : "sound", format : "degree", "aggregation": "max"},
                                 ]
                             },
                             formats: [
@@ -81,7 +80,5 @@
                 }
             });
         </script>
-
-
     </body>
 </HTML>
