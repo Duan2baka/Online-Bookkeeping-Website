@@ -11,3 +11,7 @@ def temp_data(request):
     objs = Event.objects.all()
     data = serializers.serialize('json', objs)
     return JsonResponse(data, safe=False)
+
+def result(request):
+    print(request.POST)
+    return render(request,'dashboard/result.html')
