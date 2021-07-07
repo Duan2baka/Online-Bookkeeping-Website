@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Event
-from .models import Venue_Event
+from iot.models import Event
+from iot.models import Venue_Event
 # Create your views here.
 
 def index(request):
