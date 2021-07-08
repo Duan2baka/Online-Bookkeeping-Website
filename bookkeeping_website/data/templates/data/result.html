@@ -1,10 +1,90 @@
+<!doctype html>
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin=
+    "anonymous">
     <title>Data</title>
 </head>
 <body>
-    <h1>Results</h1>
+    <h1 class="display-9 p-5 mb-5 bg-danger text-white">
+        Data
+    </h1>
     <hr>
-    
+    <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.flexmonster.com/theme/old/flexmonster.min.css"/>
+    <script>
+        function processData(dataset) {
+            //console.log('123');
+            var result = []
+            /*
+            for(var i in venue){
+                console.log(typeof(venue[i]));
+            }
+            */
+            dataset = JSON.parse(dataset);
+            dataset.forEach(
+                function(item){
+                    result.push(item.fields);
+                });
+            return result;
+        }
+    </script>
+    <div id="pivot-container1"></div>
+    <script>
+        $.ajax({
+            url: '/data/venue_temp_data',
+            dataType: 'json',
+            success: function(data) {
+                new Flexmonster({
+                    container: "#pivot-container1",
+                    componentFolder: "https://cdn.flexmonster.com/",
+                    // toolbar: true,
+                    height: 500,
+                    options: {
+                        dateTimePattern: 'yyyy-MM-dd H:m',
+                    },
+                    report: {
+                        dataSource: {
+                            type: "json",
+                            data: processData(data),
+                            mapping: {
+                                "Venue": { "caption": "Location" },
+                                "Event": { "caption": 'Event'},
+                                "start": { "caption": "start time", "type": "datetime" },
+                                "end": { "caption": "end time", "type": "datetime" },
+                                "id": { "caption": "id", "type": "number" },
+                                "Instructor": { "caption": "Instructor", "type": "string" },
+                            },
+                        },
+                        slice: {
+                            columns: [
+                                { uniqueName : "Venue" },
+                                { uniqueName : "Event" },
+                                { uniqueName : "Instructor" },
+                                { uniqueName : "[measures]" ,'label':'start time'},
+                                { uniqueName : "[measures]" ,'label':'end time'},
+                            ],
+                            measures:[
+                                { uniqueName : 'start' , format : 'degree', 'aggregation': 'min'},
+                                { uniqueName : 'end' , format : 'degree', 'aggregation': 'max'}
+                            ]
+                        },
+                        formats: [
+                            {
+                                name: "degree",
+                                decimalPlaces: 1,
+                            }
+                        ],
+                        options: {
+                            grid: {
+                                type: 'flat'
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
     
     <br>
     <button onclick="window.location.href='../data'">Back</button>
