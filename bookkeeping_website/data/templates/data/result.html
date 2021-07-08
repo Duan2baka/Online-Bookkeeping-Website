@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1 class="display-9 p-5 mb-5 bg-danger text-white">
-        Data
+        {{venue}} data between {{start}} and {{end}}
     </h1>
     <hr>
     <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
@@ -16,6 +16,9 @@
         function processData(dataset) {
             //console.log('123');
             var result = []
+            var st = new Date('{{ start|safe }}');
+            var ed = new Date('{{ end|safe }}');
+            //console.log(ed);
             /*
             for(var i in venue){
                 console.log(typeof(venue[i]));
@@ -24,7 +27,10 @@
             dataset = JSON.parse(dataset);
             dataset.forEach(
                 function(item){
-                    result.push(item.fields);
+                    var tmp_st=new Date(item.fields.start);
+                    var tmp_ed=new Date(item.fields.end);
+                    if(((tmp_ed<=ed && tmp_ed>=st) || (tmp_st>=st && tmp_st<=ed) || (tmp_st<=st && tmp_ed>=ed)) && item.fields.Venue=='{{venue}}'.toUpperCase())
+                        result.push(item.fields);
                 });
             return result;
         }
@@ -53,7 +59,10 @@
                                 "start": { "caption": "start time", "type": "datetime" },
                                 "end": { "caption": "end time", "type": "datetime" },
                                 "id": { "caption": "id", "type": "number" },
-                                "Instructor": { "caption": "Instructor", "type": "string" },
+                                "Temperature": { "caption": "Temperature", "type": "number" },
+                                "Humidity": { "caption": "Humidity", "type": "number" },
+                                "Light": { "caption": "Light", "type": "number" },
+                                "Sound": { "caption": "Sound", "type": "number" },
                             },
                         },
                         slice: {
@@ -61,12 +70,20 @@
                                 { uniqueName : "Venue" },
                                 { uniqueName : "Event" },
                                 { uniqueName : "Instructor" },
+                                { uniqueName : "[measures]" ,'label':'Temperature'},
+                                { uniqueName : "[measures]" ,'label':'Humidity'},
+                                { uniqueName : "[measures]" ,'label':'Light'},
+                                { uniqueName : "[measures]" ,'label':'Sound'},
                                 { uniqueName : "[measures]" ,'label':'start time'},
                                 { uniqueName : "[measures]" ,'label':'end time'},
                             ],
                             measures:[
                                 { uniqueName : 'start' , format : 'degree', 'aggregation': 'min'},
-                                { uniqueName : 'end' , format : 'degree', 'aggregation': 'max'}
+                                { uniqueName : 'end' , format : 'degree', 'aggregation': 'max'},
+                                { uniqueName : 'Temperature' , format : 'degree', 'aggregation': 'max'},
+                                { uniqueName : 'Humidity' , format : 'degree', 'aggregation': 'max'},
+                                { uniqueName : 'Light' , format : 'degree', 'aggregation': 'min'},
+                                { uniqueName : 'Sound' , format : 'degree', 'aggregation': 'max'},
                             ]
                         },
                         formats: [

@@ -10,6 +10,31 @@
             alert('You should choose at least ONE attribute!');
             window.location.href = "../dashboard";
         </script>
+    {% elif value == 3 %}
+        <script>
+            alert('You should fill the "start date" field!');
+            window.location.href = "../data";
+        </script>
+    {% elif value == 4 %}
+        <script>
+            alert('You should fill the "start time" field!');
+            window.location.href = "../data";
+        </script>
+    {% elif value == 5 %}
+        <script>
+            alert('You should fill the "end date" field!');
+            window.location.href = "../data";
+        </script>
+    {% elif value == 6 %}
+        <script>
+            alert('You should fill the "end time" field!');
+            window.location.href = "../data";
+        </script>
+    {% elif value == 7 %}
+        <script>
+            alert('Input error! Start time should be earlier than end time!');
+            window.location.href = "../data";
+        </script>
     {% else %}
         <script>
             alert('How do you get here?');
