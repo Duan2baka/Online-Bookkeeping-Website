@@ -1,0 +1,76 @@
+<!DOCTYPE html5>
+<HTML>
+    <head>
+        <style type="text/css">
+            table
+            {
+                border-collapse: collapse;
+                margin: 0 auto;
+                text-align: center;
+            }
+            table td, table th
+            {
+                border: 1px solid #cad9ea;
+                color: #666;
+                height: 30px;
+            }
+            table thead th
+            {
+                background-color: #CCE8EB;
+                width: 100px;
+            }
+            table tr:nth-child(odd)
+            {
+                background: #fff;
+            }
+            table tr:nth-child(even)
+            {
+                background: #F5FAFA;
+            }
+            body{background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);}
+            h1 {
+                background: #2B6695;
+                border-radius: 6px 6px 6px 6px;
+                box-shadow: 0 0 0 1px #5F5A4B, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);
+                color: #FFFFFF;
+                font-family:"微软雅黑", "宋体", "黑体", Arial;
+                font-size: 30px;
+                font-weight: bold;
+                height: 35px;
+                line-height: 35px;
+                margin: 18px 0 !important;
+                padding: 8px 0 5px 5px;
+                text-shadow: 2px 2px 3px #222222;
+            }
+            
+        </style>
+        
+        <title>IC2140 IoT</title>
+    </head>
+    <body class='body'>
+    <h1 align=center class='h1'>IC2140 IoT</h1>
+    <hr>
+    <table align=center class='table'>
+        <tr>
+            <th align=center> node_id </th>
+            <th align=center> node_loc </th>
+            <th align=center> temperature </th>
+            <th align=center> humidity </th>
+            <th align=center> light level </th>
+            <th align=center> sound level </th>
+            <th align=center> time </th>
+        </tr>
+        {% for obj in objects %}
+            <tr> 
+                <td align=center> {{ obj.node_id }} </td>
+                <td align=center> {{ obj.node_loc }} </td>
+                <td align=center> {{ obj.temp }} </td>
+                <td align=center> {{ obj.humid }} </td>
+                <td align=center> {{ obj.light }} </td>
+                <td align=center> {{ obj.sound }} </td>
+                <td align=center> {{ obj.date_created }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+    </body>
+</HTML>

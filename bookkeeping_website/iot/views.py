@@ -4,10 +4,13 @@ from .models import Event
 import xlrd
 # Create your views here.
 
-def index(request):
+def table(request):
     objects = Event.objects.all()
     dic = {'objects' : objects}
-    return render(request, 'iot/index.html', dic)
+    return render(request, 'iot/table.html', dic)
+
+def home(request):
+    return render(request,'iot/home.html')
 '''
 def import_excel(self, request):
     excel_file = request.FILES.get('excel_file', '')
