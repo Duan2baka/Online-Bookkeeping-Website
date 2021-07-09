@@ -1,5 +1,5 @@
 from django.shortcuts import render
-#from . import iot_mqtt
+from . import iot_mqtt
 from .models import Event
 import xlrd
 # Create your views here.
