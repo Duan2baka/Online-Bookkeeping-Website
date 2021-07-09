@@ -115,6 +115,7 @@
         <!--2-->
         {% if Humidity %}
             <div id="pivot-container2"></div>
+
             <script>
                 $.ajax({
                     url: '/dashboard/temp_data',
@@ -124,6 +125,7 @@
                             container: "#pivot-container2",
                             componentFolder: "https://cdn.flexmonster.com/",
                             height: 500,
+                            width: 200,
                             report: {
                                 dataSource: {
                                     type: "json",
