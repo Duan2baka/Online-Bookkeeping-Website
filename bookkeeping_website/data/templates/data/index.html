@@ -2,10 +2,49 @@
 <html>
     <head>
         <title>Data manager</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin=
+        "anonymous">
+        <style>
+            body{ background-color: lightsalmon; }
+            h2 {
+                color: #eeeeeee8;
+                font-family:"微软雅黑", "宋体", "黑体", Arial;
+                font-size: 15px;
+                font-weight: bold;
+                height: 15px;
+                line-height: 20px;
+                margin: 8px 0 !important;
+                padding: 10px 0 5px 5px;
+                text-shadow: 2px 2px 3px #222222;
+            }
+            h3 {
+                color: #666363e8;
+                font-family:"微软雅黑", "宋体", "黑体", Arial;
+                font-size: 12px;
+                font-weight: bold;
+                height: 12px;
+                line-height: 15px;
+                margin: 8px 0 !important;
+                padding: 10px 0 5px 5px;
+                text-shadow: 2px 2px 3px #222222;
+            }
+            .button {
+                background-color: #d66e6ed0;
+                border: none;
+                color: white;
+                padding: 5px 25px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 15px;
+                margin: 2px 1px;
+                cursor: pointer;
+            }
+        </style>
     </head>
-    <h1>Data manager</h1>
+    <h1 class="display-9 p-5 mb-5 bg-danger text-white">Data manager</h1>
     <hr>
-    <p><h2>Check event and environmental data in a venue in a specific time range:</h2></p>
+    <p><h2>Check event and environmental data in a venue in a specific time range:</h2></p><br>
     <body>
         <div align=left>
             <form action="result" method="post" id='Form'> 
@@ -30,7 +69,7 @@
                         <option value="W311D-Z2">W311D-Z2</option>
                     </select> 
                 </p>
-                <p><input type="submit" value="submit"></p> 
+                <p><input type="submit" value="submit" class='button'></p> 
         </div>
     </body>
 </html>

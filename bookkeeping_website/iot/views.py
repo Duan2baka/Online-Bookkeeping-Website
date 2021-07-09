@@ -5,12 +5,69 @@ import xlrd
 # Create your views here.
 
 def table(request):
+    tmp=dict(request.POST)
     objects = Event.objects.all()
-    dic = {'objects' : objects}
+    print(type(tmp))
+    cnt1=0
+    cnt2=0
+    dic = {'Temperature' : 0 , 'Humidity' : 0 , 'Light' : 0 , 'Sound' : 0}
+    venue_list_str = ['W311-H1','W311-H2','W311-H3','W311A','W311B','W311D-Z1','W311D-Z2']
+    for i in venue_list_str:
+        if not i in tmp:
+            print(i)
+            objects = objects.exclude(node_loc=i)
+    for fi,se in tmp.items():
+        if fi == 'csrfmiddlewaretoken':
+            continue
+        if fi[0] == 'W':
+            #print(type(fi))
+            print('')
+            cnt1=cnt1+1
+        else:
+            dic[fi] = 1
+            cnt2=cnt2+1
+    if not cnt1:
+        #messages.error(request, 'You must choose at least ONE venue!')
+        return render(request,'dashboard/errorpage.html',{'value' : 8})
+    if not cnt2:
+        return render(request,'dashboard/errorpage.html',{'value' : 9})
+    
+    dic['objects'] = objects
     return render(request, 'iot/table.html', dic)
 
 def home(request):
     return render(request,'iot/home.html')
+
+def filter(request):
+    return render(request,'iot/filter.html')
+
+'''
+    tmp=dict(request.POST)
+    #print(type(tmp))
+    #print(tmp)
+    cnt1=0
+    cnt2=0
+    ret = {'venue_list' : [], 'attribute_list' : [], 'Temperature' : 0 , 'Humidity' : 0 , 'Light' : 0 , 'Sound' : 0, 'W311-H1' : 0, 'W311-H2' : 0, 'W311-H3' : 0, 'W311A' : 0,'W311B' : 0,'W311D-Z1' : 0,'W311D-Z2':0}
+    for fi,se in tmp.items():
+        if fi == 'csrfmiddlewaretoken':
+            continue
+        if fi[0] == 'W':
+            ret['venue_list'].append(fi)
+            ret[fi] = 1
+            cnt1=cnt1+1
+        else:
+            ret['attribute_list'].append(fi)
+            ret[fi] = 1
+            cnt2=cnt2+1
+    if not cnt1:
+        #messages.error(request, 'You must choose at least ONE venue!')
+        return render(request,'dashboard/errorpage.html',{'value' : 1})
+    if not cnt2:
+        return render(request,'dashboard/errorpage.html',{'value' : 2})
+    ret['venue'] = json.dumps(ret['venue_list'])
+    ret['attribute'] = json.dumps(ret['attribute_list'])
+'''
+
 '''
 def import_excel(self, request):
     excel_file = request.FILES.get('excel_file', '')

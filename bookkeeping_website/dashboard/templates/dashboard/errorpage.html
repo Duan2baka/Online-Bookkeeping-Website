@@ -35,6 +35,16 @@
             alert('Input error! Start time should be earlier than end time!');
             window.location.href = "../data";
         </script>
+    {% elif value == 8 %}
+        <script>
+            alert('You should choose at least ONE venue!');
+            window.location.href = "../iot/filter";
+        </script>
+    {% elif value == 9 %}
+        <script>
+            alert('You should choose at least ONE attribute!');
+            window.location.href = "../iot/filter";
+        </script>
     {% else %}
         <script>
             alert('How do you get here?');

@@ -16,27 +16,15 @@
                 padding: 9px 0 5px 5px;
                 text-shadow: 2px 2px 3px #222222;
             }
-            .button {
-                background-color: #d66e6ed0;
-                border: none;
-                color: white;
-                padding: 5px 25px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 15px;
-                margin: 2px 1px;
-                cursor: pointer;
-            }
         </style>
-        <title>Dashboard data manager</title>
+        <title>Table Filter</title>
     </head>
-    <h1 class="display-9 p-5 mb-5 bg-danger text-white">Dashboard data manager</h1>
+    <h1 class="display-9 p-5 mb-5 bg-danger text-white">Filter</h1>
     <hr>
     <body>
         <div>
             <h2>
-            <form action="result" method="post" id='Form'> 
+            <form action="table" method="post" id='Form'> 
                 {% csrf_token %}
                 <!--
                     {{ form.st_time }}
@@ -103,8 +91,7 @@
                         <p><input type='checkbox' name='Sound'>Sound</input></p>
                     -->
                 </p>
-                <p><input type="submit" value="submit" class='button'></p> 
-                
+                <p><input type="submit" value="submit"></p> 
             <h2>
         </div>
     </body>

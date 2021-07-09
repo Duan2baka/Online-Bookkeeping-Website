@@ -54,20 +54,36 @@
         <tr>
             <th align=center> node_id </th>
             <th align=center> node_loc </th>
+            {% if Temperature %}
             <th align=center> temperature </th>
+            {% endif %}
+            {% if Humidity %}
             <th align=center> humidity </th>
+            {% endif %}
+            {% if Light %}
             <th align=center> light level </th>
+            {% endif %}
+            {% if Sound %}
             <th align=center> sound level </th>
+            {% endif %}
             <th align=center> time </th>
         </tr>
         {% for obj in objects %}
             <tr> 
                 <td align=center> {{ obj.node_id }} </td>
                 <td align=center> {{ obj.node_loc }} </td>
+                {% if Temperature %}
                 <td align=center> {{ obj.temp }} </td>
+                {% endif %}
+                {% if Humidity %}
                 <td align=center> {{ obj.humid }} </td>
+                {% endif %}
+                {% if Light %}
                 <td align=center> {{ obj.light }} </td>
+                {% endif %}
+                {% if Sound %}
                 <td align=center> {{ obj.sound }} </td>
+                {% endif %}
                 <td align=center> {{ obj.date_created }} </td>
             </tr>
         {% endfor %}
