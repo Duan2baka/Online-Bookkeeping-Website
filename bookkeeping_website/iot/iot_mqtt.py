@@ -53,7 +53,7 @@ def mqtt_on_message(client, userdata, msg):
     #print(iotData['light'])
     #print(iotData['snd'])
     #print(time.localtime().tm_hour)
-    if iotData['light']>=40 and iotData['snd']>=30 and (time.localtime().tm_hour>=22 or time.localtime().tm_hour<=7):
+    if iotData['light']>=40 and iotData['snd']>=30 :
         print('email sent!')
         send_email(iotData['loc'])
         playsound('C:/Users/ic2140/Desktop/Alarm.mp3')
