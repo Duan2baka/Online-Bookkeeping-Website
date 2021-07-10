@@ -1,6 +1,8 @@
 import paho.mqtt.client as mqtt
 from .models import Event
 import json
+import signal
+import time
 ID="A01" # Sensor ID
 mqtt_broker = "ia.ic.polyu.edu.hk" # Broker
 mqtt_port = 1883 # Default
@@ -45,6 +47,9 @@ def mqtt_on_message(client, userdata, msg):
                 flag=True
                 smtpObj.sendmail(sender, receivers, message.as_string())
                 print ("Sending sucessfully...")
+                signal.signal(signal.SIGALRM, handler)
+                signal.alarm(5)
+                time.sleep(10)
 
     except smtplib.SMTPException:
         print ("Error: fail to send the email...")
@@ -55,6 +60,7 @@ mqtt_client.on_message = mqtt_on_message
 mqtt_client.connect(mqtt_broker, mqtt_port) # Establish a connection to a broker
 print("Connect to MQTT broker")
 mqtt_client.subscribe(mqtt_topic, mqtt_qos)
+mqtt_client.loop_start()
 
 '''
 import smtplib
