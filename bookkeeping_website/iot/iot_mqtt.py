@@ -5,6 +5,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 import time
+from playsound import playsound
 ID="A01" # Sensor ID
 mqtt_broker = "ia.ic.polyu.edu.hk" # Broker
 mqtt_port = 1883 # Default
@@ -55,10 +56,11 @@ def mqtt_on_message(client, userdata, msg):
     if iotData['light']>=40 and iotData['snd']>=30 and (time.localtime().tm_hour>=22 or time.localtime().tm_hour<=7):
         print('email sent!')
         send_email(iotData['loc'])
+        playsound('C:/Users/ic2140/Desktop/Alarm.mp3')
     p = Event(node_id=iotData["node_id"], node_loc=iotData["loc"], temp=iotData["temp"], humid=iotData['hum'], light=iotData['light'], sound=iotData['snd'])
     p.save()
 
-mqtt_client = mqtt.Client("20099033D") # Create a Client Instance
+mqtt_client = mqtt.Client("Duan2baka") # Create a Client Instance
 mqtt_client.on_message = mqtt_on_message
 mqtt_client.connect(mqtt_broker, mqtt_port) # Establish a connection to a broker
 print("Connect to MQTT broker")
