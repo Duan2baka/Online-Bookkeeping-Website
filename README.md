@@ -1,1 +1,1 @@
-Sem3 project
+An IoT system that utilizes Raspberry Pi to sense environmental information, obtains and stores data using MQTT service and SQLite, and publishes a web page with Django framework to support data browsing and statistical analysis on the web.
